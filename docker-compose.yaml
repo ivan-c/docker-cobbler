@@ -1,0 +1,9 @@
+---
+version: "3.4"
+services:
+  cobbler:
+    image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-cobbler}:${DOCKER_IMAGE_TAG:-latest}"
+    build: .
+    command:
+      - --no-daemonize
+      - --log-level=INFO
