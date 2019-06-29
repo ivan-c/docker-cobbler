@@ -1,9 +1,28 @@
 ---
 version: "3.4"
+# Base service; for extension only, not for direct use
+x-service-base: &service_base
+  image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-cobbler}:${DOCKER_IMAGE_TAG:-latest}"
+  build: .
+  volumes:
+    - config-data:/etc/cobbler/
 services:
-  cobbler:
-    image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-cobbler}:${DOCKER_IMAGE_TAG:-latest}"
-    build: .
+  cobblerd:
+    <<: *service_base
     command:
       - --no-daemonize
       - --log-level=INFO
+    ports: [25151]
+
+  cobbler-web:
+    <<: *service_base
+    entrypoint: [httpd]
+    command:
+      - -DFOREGROUND
+      - -cTransferLog /dev/stdout
+      - -cServerName cobbler-web
+    ports: [80]
+    depends_on: [cobblerd]
+volumes:
+    config-data: {}
+
