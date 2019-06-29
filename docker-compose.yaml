@@ -7,3 +7,5 @@ services:
     command:
       - --no-daemonize
       - --log-level=INFO
+    ports:
+      - 25151:25151
