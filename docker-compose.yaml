@@ -6,18 +6,21 @@ x-service-base: &service_base
   build: .
   volumes:
     - config-data:/etc/cobbler/
+    - ./docker-entrypoint.sh:/bin/entrypoint.sh:ro
+  entrypoint: /bin/entrypoint.sh
 services:
   cobblerd:
     <<: *service_base
     command:
+      - cobblerd
       - --no-daemonize
       - --log-level=INFO
     ports: [25151]
 
   cobbler-web:
     <<: *service_base
-    entrypoint: [httpd]
     command:
+      - httpd
       - -DFOREGROUND
       - -cTransferLog /dev/stdout
       - -cServerName cobbler-web
