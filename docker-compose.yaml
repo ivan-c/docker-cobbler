@@ -15,16 +15,22 @@ services:
       - cobblerd
       - --no-daemonize
       - --log-level=INFO
-    ports: [25151]
+    ports:
+      # cobblerd port
+      - 25151
+      # httpd (apache) port
+      - 80
 
   cobbler-web:
     <<: *service_base
+    # cobblerd is hard-coded to only listen on 127.0.0.1
+    # https://github.com/cobbler/cobbler/blob/v2.8.4/cobbler/cobblerd.py#L108
+    network_mode: service:cobblerd
     command:
       - httpd
       - -DFOREGROUND
       - -cTransferLog /dev/stdout
       - -cServerName cobbler-web
-    ports: [80]
     depends_on: [cobblerd]
 volumes:
     config-data: {}
