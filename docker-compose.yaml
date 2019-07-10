@@ -5,7 +5,6 @@ x-service-base: &service_base
   image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-cobbler}:${DOCKER_IMAGE_TAG:-latest}"
   build: .
   volumes:
-    - config-data:/etc/cobbler/
     - ./docker-entrypoint.sh:/bin/entrypoint.sh:ro
   entrypoint: /bin/entrypoint.sh
 services:
@@ -20,7 +19,9 @@ services:
       - 25151
       # httpd (apache) port
       - 80
-
+    volumes:
+      - ./docker-entrypoint.sh:/bin/entrypoint.sh:ro
+      - config-data:/etc/cobbler/
   cobbler-web:
     <<: *service_base
     # cobblerd is hard-coded to only listen on 127.0.0.1
