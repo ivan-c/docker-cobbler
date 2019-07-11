@@ -23,6 +23,12 @@ update_setting() {
 
 # update cobblerd host
 update_setting server cobblerd
+update_setting manage_dhcp 1
+update_setting manage_dns 1
+
+sed 's|module = manage_bind|module = manage_dnsmasq|' -i /etc/cobbler/modules.conf
+sed 's|module = manage_isc|module = manage_dnsmasq|' -i /etc/cobbler/modules.conf
+
 
 for iso_file in /media/*.iso; do
     test -e "$iso_file" || continue
