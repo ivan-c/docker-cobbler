@@ -34,4 +34,4 @@ services:
       - -cServerName cobbler-web
     depends_on: [cobblerd]
 volumes:
-    config-data: {}
+  config-data: {}
