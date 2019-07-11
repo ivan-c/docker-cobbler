@@ -31,9 +31,10 @@ sed 's|module = manage_isc|module = manage_dnsmasq|' -i /etc/cobbler/modules.con
 
 
 for iso_file in /media/*.iso; do
-    test -e "$iso_file" || continue
-
     file_basename="$(basename --suffix .iso $iso_file)"
+    test -e "$iso_file" || continue
+    test ! -d "/media/$file_basename" || continue
+
     echo extracting $iso_file $file_basename
     xorriso -osirrox on -indev "$iso_file" -extract / "/media/$file_basename"
 done
