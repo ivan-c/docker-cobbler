@@ -4,13 +4,10 @@ version: "3.4"
 x-service-base: &service_base
   image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-cobbler}:${DOCKER_IMAGE_TAG:-latest}"
   build: .
-  volumes:
-    - ./docker-entrypoint.sh:/bin/entrypoint.sh:ro
-    - ./docker-entrypoint.d:/docker-entrypoint.d:ro
-  entrypoint: /bin/entrypoint.sh
 services:
   cobblerd:
     <<: *service_base
+    entrypoint: /bin/entrypoint.sh
     command:
       - cobblerd
       - --no-daemonize
@@ -30,8 +27,8 @@ services:
     # cobblerd is hard-coded to only listen on 127.0.0.1
     # https://github.com/cobbler/cobbler/blob/v2.8.4/cobbler/cobblerd.py#L108
     network_mode: service:cobblerd
+    entrypoint: httpd
     command:
-      - httpd
       - -DFOREGROUND
       - -cTransferLog /dev/stdout
       - -cServerName cobbler-web
