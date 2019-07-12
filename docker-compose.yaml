@@ -6,6 +6,7 @@ x-service-base: &service_base
   build: .
   volumes:
     - ./docker-entrypoint.sh:/bin/entrypoint.sh:ro
+    - ./docker-entrypoint.d:/docker-entrypoint.d:ro
   entrypoint: /bin/entrypoint.sh
 services:
   cobblerd:
@@ -21,6 +22,7 @@ services:
       - 80
     volumes:
       - ./docker-entrypoint.sh:/bin/entrypoint.sh:ro
+      - ./docker-entrypoint.d:/docker-entrypoint.d:ro
       - config-data:/etc/cobbler/
       - ./media:/media
   cobbler-web:
