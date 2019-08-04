@@ -10,9 +10,10 @@ update_setting() {
     local default_settings_file=/etc/cobbler/settings
     local settings_file="${3:-$default_settings_file}"
 
-    sed  -i -e '/^'$setting_name'/ s/:.*$/: '$setting_value'/' $settings_file
+    sed \
+        --in-place "$settings_file" \
+        --expression '/^'$setting_name'/ s/:.*$/: '$setting_value'/'
 }
-
 
 # update cobblerd host
 update_setting server cobblerd
