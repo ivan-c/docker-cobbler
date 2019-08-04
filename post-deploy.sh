@@ -27,3 +27,16 @@ for extracted_image_dir in media/*; do
         --path="$extracted_image_dir" \
         --name="$image_name"
 done
+
+TEST_MAC="$(print_dotenv_value TEST_MAC)"
+TEST_PROFILE="$(print_dotenv_value TEST_PROFILE)"
+
+$cobbler system add \
+    --name=test \
+    --interface=eth0 \
+    --profile=$TEST_PROFILE \
+    --mac=$TEST_MAC
+
+$cobbler sync
+
+docker-compose restart cobbler-dnsmasq
