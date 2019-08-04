@@ -17,4 +17,11 @@ update_setting() {
 
 # update cobblerd host
 update_setting server cobblerd
+update_setting next_server "$next_server"
 
+# configure cobbler to manage DNS & DHCP via dnsmasq
+update_setting manage_dhcp 1
+update_setting manage_dns 1
+
+sed 's|module = manage_bind|module = manage_dnsmasq|' --in-place /etc/cobbler/modules.conf
+sed 's|module = manage_isc|module = manage_dnsmasq|' --in-place /etc/cobbler/modules.conf

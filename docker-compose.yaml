@@ -22,8 +22,11 @@ services:
     volumes:
       - ./docker-entrypoint.sh:/bin/entrypoint.sh:ro
       - ./docker-entrypoint.d:/docker-entrypoint.d:ro
-      - config-data:/etc/cobbler/
       - ./media:/media
+      - config-data:/etc/
+      - tftp-data:/var/lib/tftpboot
+    environment:
+      next_server: ${next_server}
   cobbler-web:
     <<: *service_base
     # cobblerd is hard-coded to only listen on 127.0.0.1
@@ -35,5 +38,31 @@ services:
       - -cTransferLog /dev/stdout
       - -cServerName cobbler-web
     depends_on: [cobblerd]
+  cobbler-dnsmasq:
+    <<: *service_base
+    network_mode: host
+    entrypoint: dnsmasq
+    command:
+      - --keep-in-foreground
+      - --user=root
+    volumes:
+      - config-data:/etc/:ro
+    ports:
+      # DHCP
+      - "67:67/udp"
+  cobbler-tftp:
+    <<: *service_base
+    network_mode: host
+    entrypoint: in.tftpd
+    command:
+      - --foreground
+      - --secure
+      - /var/lib/tftpboot
+    volumes:
+      - tftp-data:/var/lib/tftpboot:ro
+    ports:
+      # TFTP
+      - "69:69"
 volumes:
   config-data: {}
+  tftp-data: {}
