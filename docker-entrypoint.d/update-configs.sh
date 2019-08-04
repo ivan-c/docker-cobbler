@@ -16,7 +16,7 @@ update_setting() {
 }
 
 # update cobblerd host
-update_setting server cobblerd
+update_setting server "$server"
 update_setting next_server "$next_server"
 
 # configure cobbler to manage DNS & DHCP via dnsmasq

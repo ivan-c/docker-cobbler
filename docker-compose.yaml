@@ -27,6 +27,7 @@ services:
       - tftp-data:/var/lib/tftpboot
     environment:
       next_server: ${next_server}
+      server: ${server}
   cobbler-web:
     <<: *service_base
     # cobblerd is hard-coded to only listen on 127.0.0.1
