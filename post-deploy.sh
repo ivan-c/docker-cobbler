@@ -3,6 +3,14 @@ set -eu
 
 # run this script after starting containers
 
+print_dotenv_value(){
+    # print value of first matching key in .env
+    local env_file=./.env
+    local variable_name=$1
+
+    grep --max-count 1 "^$variable_name=" "$env_file" | cut --delimiter '=' --fields 2-
+}
+
 
 cobbler='docker-compose exec cobblerd cobbler'
 
