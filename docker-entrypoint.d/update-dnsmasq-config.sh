@@ -33,3 +33,20 @@ insert_setting(){
         '/$insert_cobbler_system_definitions.*/i '"$setting_name=$setting_value"'' \
         --in-place "$settings_file"
 }
+
+
+settings_file=/etc/cobbler/dnsmasq.template
+
+# https://serverfault.com/q/53116
+# http://howto.basjes.nl/linux/doing-pxe-without-dhcp-control
+update_setting dhcp-range 192.168.1.0,proxy
+
+delete_setting dhcp-option
+delete_setting dhcp-lease-max
+delete_setting dhcp-authoritative
+delete_setting dhcp-boot
+
+insert_setting dhcp-ignore '#known'
+insert_setting pxe-service 'x86PC, "Boot PXELinux (=Cobbler controlled)", pxelinux ,$next_server'
+
+echo updated dnsmasq template
