@@ -3,7 +3,9 @@ version: "3.4"
 # Base service; for extension only, not for direct use
 x-service-base: &service_base
   image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-cobbler}:${DOCKER_IMAGE_TAG:-latest}"
-  build: .
+  build:
+    context: .
+    target: "${DOCKER_STAGE:-cobbler_base}"
 services:
   cobblerd:
     <<: *service_base
