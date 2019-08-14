@@ -6,6 +6,8 @@ RUN \
     yum --assumeyes install cobbler xorriso && \
     yum clean all
 
+COPY sample.seed /var/lib/cobbler/kickstarts/sample.seed
+
 ENTRYPOINT ["cobblerd"]
 CMD ["--no-daemonize"]
 
