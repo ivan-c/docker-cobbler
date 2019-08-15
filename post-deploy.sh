@@ -20,13 +20,28 @@ $cobbler sync
 echo importing extracted images...
 for extracted_image_dir in media/*; do
     test -d "$extracted_image_dir" || continue
+    # skip if not extracted iso (autorun.inf absent)
+    test -f "${extracted_image_dir}/autorun.inf" || continue
+
     image_name="$(basename $extracted_image_dir)"
 
-    echo importing $extracted_image_dir
+    echo importing extracted iso: $extracted_image_dir
     $cobbler import \
         --path="$extracted_image_dir" \
         --name="$image_name"
 done
+
+for extracted_image_dir in media/*; do
+    test -d "$extracted_image_dir" || continue
+    # skip if not dir of pxe files (initrd.gz absent)
+    test -f "${extracted_image_dir}/initrd.gz" || continue
+
+
+    pxe_dir_name="$(basename $extracted_image_dir)"
+
+    echo importing PXE dir: $extracted_image_dir...
+done
+
 
 TEST_MAC="$(print_dotenv_value TEST_MAC)"
 TEST_PROFILE="$(print_dotenv_value TEST_PROFILE)"
