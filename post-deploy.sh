@@ -40,14 +40,27 @@ for extracted_image_dir in media/*; do
     pxe_dir_name="$(basename $extracted_image_dir)"
 
     echo importing PXE dir: $extracted_image_dir...
+
+    $cobbler distro add \
+        --name="$pxe_dir_name" \
+        --kernel="${extracted_image_dir}/linux" \
+        --initrd="${extracted_image_dir}/initrd.gz" \
+        --arch=x86_64 \
+        --breed=debian \
+        --os-version=stretch
 done
+
 
 
 TEST_MAC="$(print_dotenv_value TEST_MAC)"
 TEST_PROFILE="$(print_dotenv_value TEST_PROFILE)"
 
+$cobbler profile add \
+    --name=$TEST_PROFILE \
+    --distro=debian-stretch-pxe
+
 $cobbler system add \
-    --name=test \
+    --name=test-system \
     --interface=eth0 \
     --profile=$TEST_PROFILE \
     --mac=$TEST_MAC
