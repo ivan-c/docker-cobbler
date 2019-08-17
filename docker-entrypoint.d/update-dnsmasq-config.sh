@@ -34,6 +34,8 @@ insert_setting(){
         --in-place "$settings_file"
 }
 
+echo /etc/cobbler/dnsmasq.template:::
+cat /etc/cobbler/dnsmasq.template
 
 settings_file=/etc/cobbler/dnsmasq.template
 
@@ -46,7 +48,7 @@ delete_setting dhcp-lease-max
 delete_setting dhcp-authoritative
 delete_setting dhcp-boot
 
-insert_setting dhcp-ignore '#known'
-insert_setting pxe-service 'x86PC, "Boot PXELinux (=Cobbler controlled)", pxelinux ,$next_server'
+#insert_setting dhcp-ignore '#known'
+#insert_setting pxe-service 'x86PC, "Boot PXELinux (=Cobbler controlled)", pxelinux ,$next_server'
 
 echo updated dnsmasq template
