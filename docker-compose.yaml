@@ -40,7 +40,10 @@ services:
       - -cServerName cobbler-web
     depends_on: [cobblerd]
   cobbler-dnsmasq:
-    <<: *service_base
+    image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-dnsmasq}:${DOCKER_IMAGE_TAG:-latest}"
+    build:
+      context: .
+      target: "${DOCKER_STAGE:-dnsmasq}"
     network_mode: host
     entrypoint: dnsmasq
     command:
