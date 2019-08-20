@@ -66,5 +66,3 @@ $cobbler system add \
     --mac=$TEST_MAC
 
 $cobbler sync
-
-docker-compose restart cobbler-dnsmasq

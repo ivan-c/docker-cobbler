@@ -39,21 +39,29 @@ services:
       - -cTransferLog /dev/stdout
       - -cServerName cobbler-web
     depends_on: [cobblerd]
-  cobbler-dnsmasq:
+  dnsmasq:
     image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-dnsmasq}:${DOCKER_IMAGE_TAG:-latest}"
     build:
       context: .
-      target: "${DOCKER_STAGE:-dnsmasq}"
+      target: dnsmasq
     network_mode: host
     entrypoint: dnsmasq
     command:
+      - --log-facility=-
+      - --log-queries
       - --keep-in-foreground
       - --user=root
-    volumes:
-      - config-data:/etc/:ro
+      - --read-ethers
+      - --dhcp-range=192.168.1.0,proxy
+      - --dhcp-ignore=#known
+      - --expand-hosts
+      - --pxe-service=x86PC, Boot PXELinux (=Cobbler controlled), pxelinux ,$next_server
+      - --pxe-prompt=Booting default...,5
     ports:
       # DHCP
       - "67:67/udp"
+    volumes:
+      - config-data:/etc/:ro
   cobbler-tftp:
     <<: *service_base
     network_mode: host
