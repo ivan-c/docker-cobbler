@@ -62,12 +62,16 @@ services:
       - "67:67/udp"
     volumes:
       - config-data:/etc/:ro
-  cobbler-tftp:
-    <<: *service_base
-    network_mode: host
+  tftpd:
+    image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-tftpd}:${DOCKER_IMAGE_TAG:-latest}"
+    build:
+      context: .
+      dockerfile: Dockerfile.tftpd
     entrypoint: in.tftpd
     command:
       - --foreground
+      - --user=root
+      - --address=0.0.0.0
       - --secure
       - /var/lib/tftpboot
     volumes:
