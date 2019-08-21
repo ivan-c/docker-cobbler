@@ -43,7 +43,7 @@ services:
     image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-dnsmasq}:${DOCKER_IMAGE_TAG:-latest}"
     build:
       context: .
-      target: dnsmasq
+      dockerfile: Dockerfile.dnsmasq
     network_mode: host
     entrypoint: dnsmasq
     command:

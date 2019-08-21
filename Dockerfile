@@ -22,16 +22,3 @@ RUN cd /tmp && \
 FROM cobbler_base as cobbler_aarch64
 
 COPY --from=syslinux_dump /tmp/usr/share/syslinux/ /usr/lib/syslinux/
-
-#---
-FROM debian:buster as dnsmasq
-
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install tools for reading build dependencies; see `Build-Depends`
-# Squelch superfluous output; apt-get has poor verbosity control
-RUN \
-    apt-get update --quiet > /dev/null && \
-    apt-get install --quiet --quiet --no-install-recommends \
-        dnsmasq
-ENTRYPOINT dnsmasq
