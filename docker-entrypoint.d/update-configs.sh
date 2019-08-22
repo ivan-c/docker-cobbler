@@ -19,9 +19,7 @@ update_setting() {
 update_setting server "$server"
 update_setting next_server "$next_server"
 
-# configure cobbler to manage DNS & DHCP via dnsmasq
-update_setting manage_dhcp 1
-update_setting manage_dns 1
-
-sed 's|module = manage_bind|module = manage_dnsmasq|' --in-place /etc/cobbler/modules.conf
-sed 's|module = manage_isc|module = manage_dnsmasq|' --in-place /etc/cobbler/modules.conf
+# configure cobbler to only manage tftpd files
+update_setting manage_tftpd 1
+update_setting manage_dhcp 0
+update_setting manage_dns 0
