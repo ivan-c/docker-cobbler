@@ -54,15 +54,18 @@ done
 
 TEST_MAC="$(print_dotenv_value TEST_MAC)"
 TEST_PROFILE="$(print_dotenv_value TEST_PROFILE)"
+TEST_HOSTNAME="$(print_dotenv_value TEST_HOSTNAME)"
 
 $cobbler profile add \
     --name=$TEST_PROFILE \
-    --distro=debian-stretch-pxe
+    --distro=debian-stretch-pxe \
+    --kickstart=/var/lib/cobbler/kickstarts/sample.seed
 
 $cobbler system add \
     --name=test-system \
     --interface=eth0 \
     --profile=$TEST_PROFILE \
+    --hostname=$TEST_HOSTNAME \
     --mac=$TEST_MAC
 
 $cobbler sync
