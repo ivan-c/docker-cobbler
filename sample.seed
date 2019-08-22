@@ -1,7 +1,4 @@
-# netcfg will choose an interface that has link if possible. This makes it
-# skip displaying a list if there is more than one interface.
 #set $myhostname = $getVar('hostname',$getVar('name','cobbler')).replace("_","-")
-d-i netcfg/choose_interface select auto
 d-i netcfg/get_hostname string $myhostname
 
 
