@@ -3,10 +3,12 @@ set -eu
 
 # download Debian PXE files
 
-mirror_base=https://mirrors.edge.kernel.org
-mirror_path=/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/
+: "${debian_release:?Variable not set or empty}"
 
-pxe_dir=/media/debian-stretch-pxe
+mirror_base=https://mirrors.edge.kernel.org
+mirror_path=/debian/dists/${debian_release}/main/installer-amd64/current/images/netboot/debian-installer/amd64/
+
+pxe_dir=/media/debian-${debian_release}-pxe
 
 mkdir --parents $pxe_dir
 

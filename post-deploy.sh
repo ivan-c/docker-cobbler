@@ -11,6 +11,7 @@ print_dotenv_value(){
     grep --max-count 1 "^$variable_name=" "$env_file" | cut --delimiter '=' --fields 2-
 }
 
+debian_release="$(docker-compose exec cobblerd printenv debian_release | tr --delete [:space:])"
 
 cobbler='docker-compose exec cobblerd cobbler'
 
@@ -47,7 +48,7 @@ for extracted_image_dir in media/*; do
         --initrd="${extracted_image_dir}/initrd.gz" \
         --arch=x86_64 \
         --breed=debian \
-        --os-version=stretch
+        --os-version=${debian_release}
 done
 
 
@@ -60,13 +61,13 @@ http_proxy="$(print_dotenv_value http_proxy)"
 if [ -n "$http_proxy" ]; then
     $cobbler profile add \
         --name=$TEST_PROFILE \
-        --distro=debian-stretch-pxe \
+        --distro=debian-${debian_release}-pxe \
         --ksmeta="http_proxy=${http_proxy}" \
         --kickstart=/var/lib/cobbler/kickstarts/sample.seed
 else
     $cobbler profile add \
         --name=$TEST_PROFILE \
-        --distro=debian-stretch-pxe \
+        --distro=debian-${debian_release}-pxe \
         --kickstart=/var/lib/cobbler/kickstarts/sample.seed
 fi
 

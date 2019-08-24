@@ -28,6 +28,7 @@ services:
     environment:
       next_server: ${next_server}
       server: ${server}
+      debian_release: ${debian_release:-stretch}
   cobbler-web:
     <<: *service_base
     # cobblerd is hard-coded to only listen on 127.0.0.1
