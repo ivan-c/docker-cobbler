@@ -1,6 +1,7 @@
 #!/bin/sh
-
 set -eu
+
+# update cobbler settings
 
 update_setting() {
     # update a setting in /etc/cobbler/settings

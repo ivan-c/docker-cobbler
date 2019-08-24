@@ -1,7 +1,8 @@
 #!/bin/sh
 set -eu
 
-# extract each iso to a separate directory
+# download Debian PXE files
+
 mirror_base=https://mirrors.edge.kernel.org
 mirror_path=/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/
 

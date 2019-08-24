@@ -1,3 +1,5 @@
+# use Cobbler templating to set hostname
+# todo: move to --kopts if possible
 #set $myhostname = $getVar('hostname',$getVar('name','cobbler')).replace("_","-")
 d-i netcfg/get_hostname string $myhostname
 
@@ -15,12 +17,10 @@ d-i keyboard-configuration/xkb-keymap select us
 # skip displaying a list if there is more than one interface.
 d-i netcfg/choose_interface select auto
 
-
 ### Mirror settings
 d-i mirror/country string manual
 d-i mirror/http/hostname string http.us.debian.org
 d-i mirror/http/directory string /debian
-
 
 # Root password, either in clear text
 # or encrypted using a crypt(3)  hash.
