@@ -51,15 +51,24 @@ for extracted_image_dir in media/*; do
 done
 
 
-
 TEST_MAC="$(print_dotenv_value TEST_MAC)"
 TEST_PROFILE="$(print_dotenv_value TEST_PROFILE)"
 TEST_HOSTNAME="$(print_dotenv_value TEST_HOSTNAME)"
+http_proxy="$(print_dotenv_value http_proxy)"
 
-$cobbler profile add \
-    --name=$TEST_PROFILE \
-    --distro=debian-stretch-pxe \
-    --kickstart=/var/lib/cobbler/kickstarts/sample.seed
+
+if [ -n "$http_proxy" ]; then
+    $cobbler profile add \
+        --name=$TEST_PROFILE \
+        --distro=debian-stretch-pxe \
+        --ksmeta="http_proxy=${http_proxy}" \
+        --kickstart=/var/lib/cobbler/kickstarts/sample.seed
+else
+    $cobbler profile add \
+        --name=$TEST_PROFILE \
+        --distro=debian-stretch-pxe \
+        --kickstart=/var/lib/cobbler/kickstarts/sample.seed
+fi
 
 $cobbler system add \
     --name=test-system \
@@ -67,5 +76,7 @@ $cobbler system add \
     --profile=$TEST_PROFILE \
     --hostname=$TEST_HOSTNAME \
     --mac=$TEST_MAC
+
+
 
 $cobbler sync
