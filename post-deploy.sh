@@ -56,18 +56,19 @@ TEST_MAC="$(print_dotenv_value TEST_MAC)"
 TEST_PROFILE="$(print_dotenv_value TEST_PROFILE)"
 TEST_HOSTNAME="$(print_dotenv_value TEST_HOSTNAME)"
 http_proxy="$(print_dotenv_value http_proxy)"
-
+ansible_provision=true
 
 if [ -n "$http_proxy" ]; then
     $cobbler profile add \
         --name=$TEST_PROFILE \
         --distro=debian-${debian_release}-pxe \
-        --ksmeta="http_proxy=${http_proxy}" \
+        --ksmeta="http_proxy=${http_proxy} ansible_provision=${ansible_provision}" \
         --kickstart=/var/lib/cobbler/kickstarts/sample.seed
 else
     $cobbler profile add \
         --name=$TEST_PROFILE \
         --distro=debian-${debian_release}-pxe \
+        --ksmeta="ansible_provision=${ansible_provision}" \
         --kickstart=/var/lib/cobbler/kickstarts/sample.seed
 fi
 
