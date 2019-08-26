@@ -72,14 +72,14 @@ services:
     command:
       - --foreground
       - --user=root
-      - --address=0.0.0.0
+      - --address=0.0.0.0:69
       - --secure
       - /var/lib/tftpboot
     volumes:
       - tftp-data:/var/lib/tftpboot:ro
     ports:
       # TFTP
-      - "69:69"
+      - "69:69/udp"
 volumes:
   config-data: {}
   tftp-data: {}
