@@ -81,7 +81,7 @@ $cobbler system add \
     --profile=$TEST_PROFILE \
     --hostname=$TEST_HOSTNAME \
     --mac=$TEST_MAC
-
+# NB domain is populated from hostname
 
 
 $cobbler sync

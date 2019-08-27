@@ -26,9 +26,10 @@ services:
       - config-data:/etc/
       - tftp-data:/var/lib/tftpboot
     environment:
-      next_server: ${next_server}
-      server: ${server}
       debian_release: ${debian_release:-buster}
+      server: ${server}
+      # must be IP address (not domain)
+      next_server: ${next_server}
   cobbler-web:
     <<: *service_base
     # cobblerd is hard-coded to only listen on 127.0.0.1
