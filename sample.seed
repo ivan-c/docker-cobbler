@@ -32,7 +32,7 @@ d-i mirror/http/proxy string $http_proxy
 # provision with ansible, if configured
 #set $ansible_provision = $getVar('ansible_provision', '')
 #if $ansible_provision
-d-i preseed/late_command string in-target wget --directory-prefix=/tmp/ --content-disposition https://git.io/fjOm2 ; in-target chmod +x /tmp/bootstrap-ansible.sh ; in-target /tmp/bootstrap-ansible.sh
+d-i preseed/late_command string in-target wget --directory-prefix=/tmp/ --content-disposition https://git.io/fjOm2 ; in-target chmod +x /tmp/bootstrap-ansible.sh ; in-target /tmp/bootstrap-ansible.sh ; in-target /usr/bin/ansible_pull_wrapper.sh
 #end if
 
 # Root password, either in clear text
