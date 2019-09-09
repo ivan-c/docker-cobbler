@@ -53,9 +53,7 @@ services:
       - --log-queries
       - --keep-in-foreground
       - --user=root
-      - --read-ethers
       - --dhcp-range=192.168.1.0,proxy
-      - --dhcp-ignore=#known
       - --expand-hosts
       - --pxe-service=x86PC, Boot PXELinux (=Cobbler controlled), pxelinux ,$next_server
       - --pxe-prompt=Booting default...,5
