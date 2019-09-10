@@ -15,12 +15,6 @@ debian_release="$(docker-compose exec cobblerd printenv debian_release | tr --de
 
 cobbler='docker-compose exec cobblerd cobbler'
 
-echo rebuilding configs...
-$cobbler sync
-
-echo updating available systems...
-$cobbler signature update
-
 echo importing extracted images...
 for extracted_image_dir in media/*; do
     test -d "$extracted_image_dir" || continue
