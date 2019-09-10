@@ -22,6 +22,10 @@ services:
     volumes:
       - ./docker-entrypoint.sh:/bin/entrypoint.sh:ro
       - ./docker-entrypoint.d:/docker-entrypoint.d:ro
+
+      - ./docker-post-deploy.sh:/bin/docker-post-deploy.sh:ro
+      - ./post-deploy.d:/post-deploy.d:ro
+
       - ./media:/media
       - httpd-data:/etc/httpd/
       - tftpd-data:/var/lib/tftpboot
