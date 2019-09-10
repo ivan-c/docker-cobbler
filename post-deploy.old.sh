@@ -15,20 +15,6 @@ debian_release="$(docker-compose exec cobblerd printenv debian_release | tr --de
 
 cobbler='docker-compose exec cobblerd cobbler'
 
-echo importing extracted images...
-for extracted_image_dir in media/*; do
-    test -d "$extracted_image_dir" || continue
-    # skip if not extracted iso (autorun.inf absent)
-    test -f "${extracted_image_dir}/autorun.inf" || continue
-
-    image_name="$(basename $extracted_image_dir)"
-
-    echo importing extracted iso: $extracted_image_dir
-    $cobbler import \
-        --path="$extracted_image_dir" \
-        --name="$image_name"
-done
-
 for extracted_image_dir in media/*; do
     test -d "$extracted_image_dir" || continue
     # skip if not dir of pxe files (initrd.gz absent)
@@ -47,7 +33,6 @@ for extracted_image_dir in media/*; do
         --breed=debian \
         --os-version=${debian_release}
 done
-
 
 TEST_MAC="$(print_dotenv_value TEST_MAC)"
 TEST_PROFILE="$(print_dotenv_value TEST_PROFILE)"
