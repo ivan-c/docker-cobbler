@@ -69,6 +69,7 @@ services:
       dockerfile: Dockerfile.tftpd
     entrypoint: in.tftpd
     command:
+      # todo: figure out how to log to stdout
       - --foreground
       - --user=root
       - --address=0.0.0.0:69
