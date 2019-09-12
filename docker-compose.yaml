@@ -23,8 +23,8 @@ services:
       - ./docker-entrypoint.sh:/bin/entrypoint.sh:ro
       - ./docker-entrypoint.d:/docker-entrypoint.d:ro
       - ./media:/media
-      - config-data:/etc/httpd/
-      - tftp-data:/var/lib/tftpboot
+      - httpd-data:/etc/httpd/
+      - tftpd-data:/var/lib/tftpboot
     environment:
       debian_release: ${debian_release:-buster}
       server: ${server}
@@ -61,7 +61,7 @@ services:
       # DHCP
       - "67:67/udp"
     volumes:
-      - config-data:/etc/httpd/:ro
+      - httpd-data:/etc/httpd/:ro
   tftpd:
     image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-tftpd}:${DOCKER_IMAGE_TAG:-latest}"
     build:
@@ -78,10 +78,10 @@ services:
       - --logfile=-
       - /var/lib/tftpboot
     volumes:
-      - tftp-data:/var/lib/tftpboot:ro
+      - tftpd-data:/var/lib/tftpboot:ro
     ports:
       # TFTP
       - "69:69/udp"
 volumes:
-  config-data: {}
-  tftp-data: {}
+  httpd-data: {}
+  tftpd-data: {}
