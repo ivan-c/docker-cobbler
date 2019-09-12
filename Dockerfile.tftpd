@@ -1,9 +1,9 @@
-FROM debian:buster as dnsmasq
+FROM debian:buster
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN \
     apt-get update --quiet > /dev/null && \
     apt-get install --quiet --quiet --no-install-recommends \
-        tftpd-hpa
+        atftpd
 ENTRYPOINT in.tftpd

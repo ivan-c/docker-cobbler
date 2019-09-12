@@ -1,4 +1,4 @@
-FROM debian:buster as dnsmasq
+FROM debian:buster
 
 ENV DEBIAN_FRONTEND=noninteractive
 
