@@ -63,6 +63,7 @@ services:
       - --dhcp-range=192.168.1.0,proxy
       - --expand-hosts
       - --pxe-service=x86PC,Boot PXELinux (=Cobbler controlled),pxelinux,$next_server
+      - --pxe-service=x86-64_EFI,Boot EFI (=Cobbler controlled),bootnetx64.efi,$next_server
       - --pxe-prompt=Booting default...,5
     ports:
       # DHCP
