@@ -34,6 +34,8 @@ services:
       server: ${server}
       # must be IP address (not domain)
       next_server: ${next_server}
+    env_file:
+      - cobbler.env
   cobbler-web:
     <<: *service_base
     # cobblerd is hard-coded to only listen on 127.0.0.1
