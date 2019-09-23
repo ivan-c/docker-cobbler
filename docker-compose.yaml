@@ -64,8 +64,10 @@ services:
       - --expand-hosts
       - --pxe-service=x86PC,Boot PXELinux (=Cobbler controlled),pxelinux,$next_server
 
+      # cobbler gPXE
+      - --pxe-service=x86-64_EFI,Boot EFI (=Cobbler controlled),ipxe.efi,$next_server
       # debian-installer EFI
-      - --pxe-service=x86-64_EFI,Boot EFI (=Cobbler controlled),debian-installer/amd64/grubx64.efi,$next_server
+      #- --pxe-service=x86-64_EFI,Boot EFI (=Cobbler controlled),debian-installer/amd64/grubx64.efi,$next_server
       # cobbler default EFI
       #- --pxe-service=x86-64_EFI,Boot EFI (=Cobbler controlled),grub/grub-x86_64.efi,$next_server
 
