@@ -6,6 +6,7 @@ if echo "$imported_systems" | grep --quiet test-system; then exit 0; fi
 
 cobbler system add \
     --name=test-system \
+    --enable-gpxe=1 \
     --interface=eth0 \
     --profile=$TEST_PROFILE \
     --hostname=$TEST_HOSTNAME \
