@@ -28,6 +28,7 @@ services:
 
       - ./media:/media
       - httpd-data:/etc/httpd/
+      - httpd-data:/var/www/cobbler
       - tftpd-data:/var/lib/tftpboot
     environment:
       debian_release: ${debian_release:-buster}
@@ -47,6 +48,9 @@ services:
       - -cTransferLog /dev/stdout
       - -cServerName cobbler-web
     depends_on: [cobblerd]
+    volumes:
+      - httpd-data:/var/www/cobbler
+      - ./media:/media
   dnsmasq:
     image: "${DOCKER_REPOSITORY-ivan-c/}${DOCKER_IMAGE_NAME:-dnsmasq}:${DOCKER_IMAGE_TAG:-latest}"
     build:
