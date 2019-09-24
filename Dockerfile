@@ -7,6 +7,7 @@ RUN \
     yum clean all
 
 COPY sample.seed /var/lib/cobbler/kickstarts/sample.seed
+COPY gpxe_system_linux.template /etc/cobbler/pxe/gpxe_system_linux.template
 
 ENTRYPOINT ["cobblerd"]
 CMD ["--no-daemonize"]
