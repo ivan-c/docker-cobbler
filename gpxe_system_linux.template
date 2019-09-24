@@ -1,5 +1,6 @@
 #!gpxe
-kernel http://$server:$http_port/cobbler/images/$distro/$kernel_name
-imgargs $kernel_name initrd=$initrd_name $append_line
-initrd http://$server:$http_port/cobbler/images/$distro/$initrd_name
+# todo: use distro variable
+kernel http://mirrors.edge.kernel.org/debian/dists/buster/main/installer-amd64/current/images/netboot/debian-installer/amd64/linux
+imgargs $kernel_name initrd=initrd.gz $append_line
+initrd http://mirrors.edge.kernel.org/debian/dists/buster/main/installer-amd64/current/images/netboot/debian-installer/amd64/initrd.gz
 boot
